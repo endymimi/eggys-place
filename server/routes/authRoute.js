@@ -1,5 +1,5 @@
 import express from "express";
-import { signUp } from "../controllers/authControllerjs";
+import { signUp } from "../controllers/authController.js";
 
 
 
