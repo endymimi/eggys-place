@@ -26,8 +26,7 @@ export const products = async (req,res)=>{
         res.status(500).json(error.message)
     }
   }
-
-//   get products
+  
 
 export const allProducts = async(req,res)=>{
     try {
