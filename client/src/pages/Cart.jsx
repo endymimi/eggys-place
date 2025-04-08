@@ -19,7 +19,9 @@ const Cart = () => {
       ) : (
         <main className="bg-[#2F2F2F] text-white wrapper grid lg:grid-cols-3 gap-[20px] ">
           <CartItems/>
+        
           <CartSummary/>
+        
         </main>
       )}
       <SimilarProducts/>

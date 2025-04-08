@@ -9,6 +9,13 @@ import AuthModal from "../components/modals/AuthModal";
 import SearchField from "../components/SearchField";
 import searchLogo from "../assets/search-logo.svg"
 import CartContext from "../context/CartContext";
+import helloIcon from "../assets/helloIcon.svg";
+import dashboard from "../assets/dashboardIcon.png";
+import orderIcon from "../assets/orderIcon.svg";
+import inbox from "../assets/inboxx.svg";
+import dropdown from "../assets/drop-down-img.svg";
+import logOut from "../assets/logoutIcon.svg";
+import Order from "../pages/Order";
 
 const Navbar = () => {
   const [isLoggedIn,setIsloggedIn] = useState(false);
@@ -79,7 +86,24 @@ const Navbar = () => {
               </li>
               <li className="" >
 
-              {isLoggedIn ? <div className="text-white">Hi eggys</div> :  <div className="cursor-pointer flex items-center w-[98px] h-[50px] justify-center  md:w-[124px] lg:h-[56px] py-[15px] px-[20px]  bg-[#F0F0F0]  rounded-full ">
+              {isLoggedIn ? <div className="text-white">
+
+                <div className="dropdown dropdown-down dropdown-center">
+  <div tabIndex={0} role="button" className="text-white m-1 flex my-3 cursor-pointer"> <img src={helloIcon} alt="" />Hi,Eggys <img src={dropdown} alt="" /></div>
+  <ul tabIndex={0} className="dropdown-content menu bg-black rounded-box z-1 w-52 p-2 shadow-sm">
+    <li className="text-white hover:bg-[#B67B0F]   cursor-pointer"><a> <img src={dashboard} alt="" /> DashBoard</a></li>
+    <li className="text-white hover:bg-[#B67B0F]  cursor-pointer"><a> <img src={helloIcon} alt="" /> My Account</a></li>
+    <Link to="/Order">
+    <li className="text-white hover:bg-[#B67B0F] cursor-pointer"><a> <img src={orderIcon} alt="Order-image" /> Orders</a></li>
+    </Link>
+    <li className="text-white hover:bg-[#B67B0F] cursor-pointer"><a> <img src={inbox} alt="" /> Inbox</a></li>
+    <li>
+    <button className=" hover:bg-[#B67B0F] cursor-pointer flex gap-1 px-4 py-2 text-sm text-red-600 " onClick={() => document.getElementById('my_modal_2').showModal()}> <img src={logOut} alt="" /> Log Out</button>
+    </li>
+  </ul>
+</div>
+
+              </div> :  <div className="cursor-pointer flex items-center w-[98px] h-[50px] justify-center  md:w-[124px] lg:h-[56px] py-[15px] px-[20px]  bg-[#F0F0F0]  rounded-full ">
                 
                 <img src={loginLogo} alt="login-logo" /> <span className="ps-2 text-[#100101] font-[500] text-[20px]"> <AuthModal text="Login"/>  </span>
                 </div> }

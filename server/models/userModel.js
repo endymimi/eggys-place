@@ -80,7 +80,7 @@ userSchema.methods.generateToken = async function (params) {
 // generating resetpassword token
 userSchema.methods.getResetPasswordToken = function () {
   const resetToken = crypto.randomBytes(20).toString("hex");
-  this.resetPasswordToken = crypto
+  this.resetPasswordToken =  crypto
     .createHash("sha256")
     .update(resetToken)
     .digest("hex");

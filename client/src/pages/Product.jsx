@@ -26,7 +26,6 @@ const Product = () => {
     try {
       const req = await fetch(`${baseUrl}/${productId}`);
       const res = await req.json();
-      // console.log(res.product);
       setProduct(res.product)
       const allproducts = await fetch (`${baseUrl}/all-products`);
       const allproductsData = await allproducts.json();
