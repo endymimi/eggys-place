@@ -1,5 +1,5 @@
 import USER from "../models/userModel.js";
-import {sendForgotPasswordMail} from "../emails/emailHandlers.js";
+import { sendForgotPasswordMail } from "../emails/emailHandlers.js";
 import crypto from "crypto";
 
 //sign up
@@ -85,51 +85,50 @@ export const signIn = async (req, res) => {
   }
 };
 
-// forgot password
+//forgot password 
 export const forgotPassword = async(req,res)=>{
-    const {email} = req.body;
-    try {
-        if(!email){
-            res.status(400).json({success:false,errMsg:"email is required"});
-            return;
-        }
-     
-        const user = await USER.findOne({email});
-     if(!user){
-        res.status(404).json({success:false,errMsg:"email not found"});
-        return
-     }
-     
-     const resetToken = user.getResetPasswordToken();
-      await user.save();
-     res.status(201).json({success:true,message:"mail sent"});
-     const resetUrl = process.env.CLIENT_URL_RESET  + resetToken;
-     try {
-        await sendForgotPasswordMail({
-          to:user.email,
-          firstName:user.firstName,
-          resetUrl
-        })
-     } catch (error) {
-       user.resetPasswordToken = undefined;
-       user.resetPasswordExpire = undefined;
-       await user.save();
-       return res.status(500).json({errMsg:"Email could not be sent", error})
-     }
-
-    } catch (error) {
-       res.status(500).json(error.message)
+  const {email} = req.body;
+  try {
+    if(!email){
+      res.status(400).json({success:false,errMsg:"email is required"});
+      return;
     }
-}
 
-// reset password function
+    const user = await USER.findOne({email});
+    if (!user) {
+      res.status(404).json({success:false,errMsg:"email not found"});
+      return;
+    }
+    const resetToken = user.getResetPasswordToken();
+    // console.log(resetToken);
+    await user.save();
+    res.status(201).json({success:true,message:"mail sent"});
+    const resetUrl = process.env.CLIENT_URL_RESET + resetToken;
+    try {
+      await sendForgotPasswordMail({
+        to:user.email,
+        firstName: user.firstName,
+        resetUrl,
+      });
+    } catch (error) {
+      user.resetPasswordToken = undefined;
+      user.resetPasswordExpire = undefined;
+      await user.save();
+      return res.status(500).json({errMsg:"Email could not be sent", error})
+    }
+    
+  } catch (error) {
+    res.status(500).json(error.message);
+  }
+};
 
+//reset password ftn 
 export const resetPassword = async (req,res)=>{
-  const resetPasswordToken = crypto.createHash("sha256").update(req.params, resetToken).digest("hex");
+  const resetPasswordToken = crypto.createHash("sha256").update(req.params.resetToken).digest("hex");
   try {
     const user = await USER.findOne({
       resetPasswordToken,
-      resetPasswordExpire :{$gt:Date.now()}
+      resetPasswordExpire:{$gt:Date.now()}
     })
     if(!user){
       res.status(400).json({status:false, errMsg:"invalid reset token"});
@@ -139,8 +138,8 @@ export const resetPassword = async (req,res)=>{
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
     await user.save();
-    res.status(201).json({success:true,message:"password reset sucecessful"})
+    res.status(201).json({success:true,message:"Password Reset successful"})
   } catch (error) {
-    return res.status(500).json(error.message);
+    res.status(500).json(error.message);
   }
-}
+};

@@ -7,6 +7,7 @@ import CartContext from "../context/CartContext";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import rateIcon from "../assets/rating-icon.svg";
+
 const baseUrl = import.meta.env.VITE_API_URL;
 const Product = () => {
   const { handleAddToCart } = useContext(CartContext);
@@ -24,10 +25,10 @@ const Product = () => {
  
   const fetchProduct = async () => {
     try {
-      const req = await fetch(`${baseUrl}/${productId}`);
+      const req = await fetch(`${baseUrl}/api/product/${productId}`);
       const res = await req.json();
       setProduct(res.product)
-      const allproducts = await fetch (`${baseUrl}/all-products`);
+      const allproducts = await fetch (`${baseUrl}/api/product/all-products`);
       const allproductsData = await allproducts.json();
       const filteredSimilarProducts = allproductsData.products.filter((item)=>item.category === res.product.category && item._id)
       setSimilarProducts(filteredSimilarProducts)
