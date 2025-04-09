@@ -24,7 +24,7 @@ const ForgotPwd = () => {
 
   const handleForgotPwd = async (data) => {
     try { 
-      const  req = await fetch(`${baseUrl}/api/auth/forgot-password`,{
+      const  req = await fetch(`https://eggys-place-g8vr.onrender.com/api/auth/forgot-password`,{
         method:"POST",
         headers:{
           "Content-Type":"application/json"

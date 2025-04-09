@@ -25,7 +25,7 @@ const Product = () => {
  
   const fetchProduct = async () => {
     try {
-      const req = await fetch(`${baseUrl}/api/product/${productId}`);
+      const req = await fetch(`https://eggys-place-g8vr.onrender.com/api/product/${productId}`);
       const res = await req.json();
       setProduct(res.product)
       const allproducts = await fetch (`${baseUrl}/api/product/all-products`);

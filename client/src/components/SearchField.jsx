@@ -24,7 +24,7 @@ const SearchField = () => {
   async function fetchSearchResults(){
     setIsLoading(true)
     try {
-     const request = await fetch(`${baseUrl}/api/product/products/search?query=${searchTerm}`);
+     const request = await fetch(`https://eggys-place-g8vr.onrender.com/api/product/products/search?query=${searchTerm}`);
      const data = await request.json();
      setSearchResults(data.products || [])
     } catch (error) {
