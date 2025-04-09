@@ -74,9 +74,7 @@ const Menu = () => {
 
 </div>   ) : <> 
           
-            {menuItems
-            .filter((menuItem) => menuItem.category === selectedCat)
-            .map((mappedMenu) => {
+            {menuItems?.filter((menuItem) => menuItem.category === selectedCat)?.map((mappedMenu) => {
               const { _id, title, image, rating, duration, price, category } =
                 mappedMenu;
               return (
