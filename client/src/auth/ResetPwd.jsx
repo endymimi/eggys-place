@@ -7,16 +7,17 @@ import MyButton from "../components/MyButton";
 import brandLogo from "../assets/nav-logo.svg"
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ResetpwdSchema } from "../utils/ValidationSchema";
-import { useParams, useNavigate } from "react-router-dom";
 import LoadingRing from "../utils/Loader";
+import { useParams, useNavigate } from "react-router-dom";
+import { toast  } from "sonner";
 
 const baseUrl = import.meta.env.VITE_API_URL;
 
 const ResetPwd = () => {
   const [isReveal, setIsReveal] = useState(false);
   const [isReveal2, setIsReveal2] = useState(false);
-  const {resetToken} = useParams();
-  const navigate = useNavigate();
+  const{resetToken} = useParams();
+  const navigate = useNavigate()
   function togglePwd() {
     setIsReveal((prev) => !prev);
   }
@@ -26,35 +27,35 @@ const ResetPwd = () => {
     const {
         register,
         handleSubmit,
-        formState: { errors, isSubmitting },
+        formState: { errors,isSubmitting },
       } = useForm({
         resolver: yupResolver(ResetpwdSchema),
       })
-      const onSubmit = async  (data) => {
+      const onSubmit = async (data) => {
         try {
-          const req = await fetch(`${baseUrl}/api/auth/reset-password/${resetToken}`,{
-            method:"PUT",
-            headers:{
-              "Content-Type":"application/json"
-            },
-            body:JSON.stringify(data)
-          })
-          const res = await req.json();
-          if(!res.success){
-            toast.error(res.errMsg)
-          }
-          if(res.success){
-            toast.success(res.message);
-            navigate("/")
-          }
+          const req = await fetch(
+            `http://localhost:4040/api/auth/reset-password/${resetToken}`,
+            {
+              method: "PUT",
+              headers: {
+                "content-Type": "application/json",
+              },
+              body: JSON.stringify(data),
+            }
+          );
+          const res = await req.json ();
+           if (!res.success) {
+             toast.error(res.errMsg);
+           }
+           if (res.success) {
+             toast.success(res.message);
+             navigate("/")
+           }
         } catch (error) {
           
         }
-      };
-      const btnText = isSubmitting ? <LoadingRing/> : "Reset Password"
-
-
-    
+      }
+        const btnTxt = isSubmitting ? <LoadingRing /> : "Reset Password ";
   return (
     <>
       <main className="bg-[#2F2F2F] h-screen flex flex-col   md:text-start justify-center items-center">
@@ -107,7 +108,7 @@ const ResetPwd = () => {
             <p className="text-red-600">{errors.cPassword?.message}</p>
           </div>
           <MyButton
-            disabled={isSubmitting} text={btnText} 
+            text={btnTxt}
             className="w-[350px] font-[500] text-[20px] md:w-[400px] h-[56px]"
           />
         </form>
